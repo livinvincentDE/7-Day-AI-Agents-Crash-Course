@@ -13,30 +13,25 @@ text_index = Index(
     text_fields=["question", "content"],
     keyword_fields=[]
 )
-
 text_index.fit(documents)
 
 # Step 3: Load embedding model
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Step 4: Create embeddings
-doc_embeddings = []
-
-for doc in documents:
-    text = doc["question"] + " " + doc["content"]
-    emb = model.encode(text)
-    doc_embeddings.append(emb)
-
-doc_embeddings = np.array(doc_embeddings)
+doc_embeddings = np.array([
+    model.encode(doc["question"] + " " + doc["content"])
+    for doc in documents
+])
 
 
 # 🔍 TEXT SEARCH
-def text_search(query):
+def text_search(query: str) -> list:
     return text_index.search(query, num_results=3)
 
 
 # 🧠 VECTOR SEARCH
-def vector_search(query):
+def vector_search(query: str) -> list:
     q_emb = model.encode(query)
     scores = doc_embeddings.dot(q_emb)
     top_idx = np.argsort(scores)[-3:][::-1]
@@ -44,7 +39,7 @@ def vector_search(query):
 
 
 # 🔄 HYBRID SEARCH
-def hybrid_search(query):
+def hybrid_search(query: str) -> list:
     text_results = text_search(query)
     vector_results = vector_search(query)
 
@@ -52,8 +47,10 @@ def hybrid_search(query):
     combined = []
 
     for r in text_results + vector_results:
-        if r["id"] not in seen:
-            seen.add(r["id"])
+        # Fallback to content hash if no 'id' field exists
+        key = r.get("id") or hash(r["question"])
+        if key not in seen:
+            seen.add(key)
             combined.append(r)
 
     return combined
