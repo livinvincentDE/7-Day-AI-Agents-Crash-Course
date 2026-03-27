@@ -47,7 +47,6 @@ def hybrid_search(query: str) -> list:
     combined = []
 
     for r in text_results + vector_results:
-        # Fallback to content hash if no 'id' field exists
         key = r.get("id") or hash(r["question"])
         if key not in seen:
             seen.add(key)
@@ -56,7 +55,65 @@ def hybrid_search(query: str) -> list:
     return combined
 
 
+# ─────────────────────────────────────────────
+# 📊 SEARCH QUALITY EVALUATION (Hit Rate + MRR)
+# ─────────────────────────────────────────────
+def evaluate_search_quality(search_function, test_queries: list) -> dict:
+    """
+    Evaluate search function using Hit Rate and MRR.
+
+    Args:
+        search_function : one of text_search, vector_search, hybrid_search
+        test_queries    : list of (query_str, expected_ids_set)
+                          e.g. [("Can I join late?", {"1"}), ...]
+
+    Returns:
+        dict with hit_rate, mrr, and per-query details list
+    """
+    results = []
+
+    for query, expected_ids in test_queries:
+        # ✅ Fix 1 — no num_results arg (functions only accept query)
+        search_results = search_function(query)
+
+        # ✅ Fix 2 — use "id" field (matches data.py schema, not "filename")
+        relevant_found = any(
+            doc.get("id") in expected_ids for doc in search_results
+        )
+
+        mrr = 0
+        for i, doc in enumerate(search_results):
+            if doc.get("id") in expected_ids:
+                mrr = 1 / (i + 1)
+                break
+
+        results.append({
+            "query": query,
+            "hit":   relevant_found,
+            "mrr":   mrr
+        })
+
+    # ✅ Fix 3 — return results (not returnresults)
+    hit_rate = sum(r["hit"] for r in results) / len(results) if results else 0
+    mean_mrr = sum(r["mrr"] for r in results) / len(results) if results else 0
+
+    print("\n" + "=" * 45)
+    print("🔍  SEARCH QUALITY METRICS")
+    print("=" * 45)
+    print(f"  Hit Rate : {hit_rate:.2%}")
+    print(f"  MRR      : {mean_mrr:.4f}")
+    print("=" * 45)
+
+    return {
+        "hit_rate": hit_rate,
+        "mrr":      mean_mrr,
+        "details":  results
+    }
+
+
+# ─────────────────────────────────────────────
 # ▶️ MAIN EXECUTION
+# ─────────────────────────────────────────────
 if __name__ == "__main__":
     query = "Can I enroll in the course?"
 
@@ -71,3 +128,22 @@ if __name__ == "__main__":
     print("\n🔄 HYBRID SEARCH:\n")
     for r in hybrid_search(query):
         print(f"{r['question']} -> {r['content']}")
+
+    # ── Evaluate all 3 search modes ──────────────
+    print("\n\n📊 EVALUATING SEARCH QUALITY...\n")
+
+    # Test queries matched to your data.py ids: "1", "2", "3"
+    test_queries = [
+        ("Can I join after the course starts?", {"1"}),
+        ("Is there a deadline to finish?",      {"2"}),
+        ("Do I need prior experience?",         {"3"}),
+    ]
+
+    print("▶ Text Search:")
+    evaluate_search_quality(text_search, test_queries)
+
+    print("\n▶ Vector Search:")
+    evaluate_search_quality(vector_search, test_queries)
+
+    print("\n▶ Hybrid Search:")
+    evaluate_search_quality(hybrid_search, test_queries)

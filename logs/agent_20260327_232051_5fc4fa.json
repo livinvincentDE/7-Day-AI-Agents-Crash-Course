@@ -1,0 +1,11 @@
+{
+  "agent_name": "agent",
+  "system_prompt": "No system prompt found",
+  "model": "llama-3.3-70b-versatile",
+  "tools": [],
+  "messages": [
+    "ModelRequest(parts=[SystemPromptPart(content='\\nYou are a helpful FAQ assistant for an online course platform.\\n\\nUse the provided context documents to answer the question accurately.\\nAlways include references by citing the source when possible.\\nIf the context does not contain enough information, reply exactly with:\\n\"I\\'m sorry, I don\\'t have enough information to answer that question.\"\\n\\nBe concise, friendly, and accurate.\\n', timestamp=datetime.datetime(2026, 3, 27, 17, 50, 51, 202953, tzinfo=datetime.timezone.utc)), UserPromptPart(content='Context:\\n[1] Q: Do I need prior experience?\\n    A: No prior experience is required.\\n\\n[2] Q: Can I join the course after it starts?\\n    A: Yes, you can join anytime.\\n\\n[3] Q: Is there a deadline?\\n    A: No strict deadline.\\n\\nQuestion: do i need any experience to join ?\\n', timestamp=datetime.datetime(2026, 3, 27, 17, 50, 51, 202953, tzinfo=datetime.timezone.utc))], timestamp=datetime.datetime(2026, 3, 27, 17, 50, 51, 203952, tzinfo=datetime.timezone.utc), run_id='9df56ce2-e1df-47b0-8602-e32854f35779')",
+    "ModelResponse(parts=[TextPart(content=\"No, you don't need any prior experience to join the course. (Source: [1] Q: Do I need prior experience? A: No prior experience is required.)\")], usage=RequestUsage(input_tokens=177, output_tokens=37), model_name='llama-3.3-70b-versatile', timestamp=datetime.datetime(2026, 3, 27, 17, 50, 51, 623481, tzinfo=datetime.timezone.utc), provider_name='groq', provider_url='https://api.groq.com', provider_details={'finish_reason': 'stop', 'timestamp': datetime.datetime(2026, 3, 27, 17, 50, 53, tzinfo=TzInfo(0))}, provider_response_id='chatcmpl-2ed3029b-97a0-409d-8268-990680ff9d4b', finish_reason='stop', run_id='9df56ce2-e1df-47b0-8602-e32854f35779')"
+  ],
+  "source": "user"
+}

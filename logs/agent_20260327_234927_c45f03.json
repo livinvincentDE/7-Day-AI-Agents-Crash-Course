@@ -1,0 +1,11 @@
+{
+  "agent_name": "agent",
+  "system_prompt": "<bound method Agent.instructions of Agent(model=GroqModel(), name='agent', end_strategy='early', model_settings=None, output_type=<class 'str'>, instrument=None)>",
+  "model": "llama-3.3-70b-versatile",
+  "tools": [],
+  "messages": [
+    "ModelRequest(parts=[SystemPromptPart(content='\\nYou are a helpful FAQ assistant for an online course platform.\\n\\nUse ONLY the provided context to answer the question.\\nAlways include references by citing the source material when possible.\\nUse Markdown format: [Question Title](https://github.com/DataTalksClub/faq/blob/main/[filename])\\n\\nIf the context does not contain enough information, reply exactly with:\\n\"I\\'m sorry, I don\\'t have enough information to answer that question.\"\\n\\nBe concise, friendly, and accurate.\\n', timestamp=datetime.datetime(2026, 3, 27, 18, 19, 27, 96286, tzinfo=datetime.timezone.utc)), UserPromptPart(content='Context:\\n[1] Q: Can I join the course after it starts?\\n    A: Yes, you can join anytime.\\n\\n[2] Q: Is there a deadline?\\n    A: No strict deadline.\\n\\n[3] Q: Do I need prior experience?\\n    A: No prior experience is required.\\n\\nQuestion: What if I miss the start date, can I still enroll?\\n', timestamp=datetime.datetime(2026, 3, 27, 18, 19, 27, 96286, tzinfo=datetime.timezone.utc))], timestamp=datetime.datetime(2026, 3, 27, 18, 19, 27, 96286, tzinfo=datetime.timezone.utc), run_id='1eef5057-abd6-4895-a2ed-bf13f1b9c74f')",
+    "ModelResponse(parts=[TextPart(content='You can still enroll if you miss the start date. As stated in [1], \"Yes, you can join anytime.\"')], usage=RequestUsage(input_tokens=205, output_tokens=26), model_name='llama-3.3-70b-versatile', timestamp=datetime.datetime(2026, 3, 27, 18, 19, 27, 290727, tzinfo=datetime.timezone.utc), provider_name='groq', provider_url='https://api.groq.com', provider_details={'finish_reason': 'stop', 'timestamp': datetime.datetime(2026, 3, 27, 18, 19, 28, tzinfo=TzInfo(0))}, provider_response_id='chatcmpl-7c99543f-15dd-4482-b0aa-7d2e32ac00b3', finish_reason='stop', run_id='1eef5057-abd6-4895-a2ed-bf13f1b9c74f')"
+  ],
+  "source": "ai-generated"
+}
