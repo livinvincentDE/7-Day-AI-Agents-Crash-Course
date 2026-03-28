@@ -1,0 +1,12 @@
+{
+  "agent_name": "faq_agent",
+  "system_prompt": "<bound method Agent.instructions of Agent(model=GroqModel(), name='faq_agent', end_strategy='early', model_settings=None, output_type=<class 'str'>, instrument=None)>",
+  "model": "llama-3.3-70b-versatile",
+  "tools": [],
+  "messages": [
+    "ModelRequest(parts=[SystemPromptPart(content='\\nYou are a helpful FAQ assistant for an online course platform.\\n\\nUse ONLY the provided context to answer the question.\\nAlways include references by citing the source material when possible.\\nUse Markdown format: [Question Title](https://github.com/DataTalksClub/faq/blob/main/[filename])\\n\\nIf the context does not contain enough information, reply exactly with:\\n\"I\\'m sorry, I don\\'t have enough information to answer that question.\"\\n\\nBe concise, friendly, and accurate.\\n', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 37, 789102, tzinfo=datetime.timezone.utc)), UserPromptPart(content='Context:\\n[1] Q: Is there a deadline?\\n    A: No strict deadline.\\n\\n[2] Q: Do I need prior experience?\\n    A: No prior experience is required.\\n\\n[3] Q: Can I join the course after it starts?\\n    A: Yes, you can join anytime.\\n\\nQuestion: no', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 37, 789102, tzinfo=datetime.timezone.utc))], timestamp=datetime.datetime(2026, 3, 28, 17, 6, 37, 789102, tzinfo=datetime.timezone.utc), run_id='29dcc763-801b-45ad-b648-77bee7396014')",
+    "ModelResponse(parts=[TextPart(content=\"I'm sorry, I don't have enough information to answer that question.\")], usage=RequestUsage(input_tokens=193, output_tokens=16), model_name='llama-3.3-70b-versatile', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 38, 240112, tzinfo=datetime.timezone.utc), provider_name='groq', provider_url='https://api.groq.com', provider_details={'finish_reason': 'stop', 'timestamp': datetime.datetime(2026, 3, 28, 17, 6, 39, tzinfo=TzInfo(0))}, provider_response_id='chatcmpl-e0a330d2-3b9d-40e3-9a7f-f03f771f21ef', finish_reason='stop', run_id='29dcc763-801b-45ad-b648-77bee7396014')"
+  ],
+  "source": "user",
+  "logged_at": "2026-03-28T22:36:38.241144"
+}

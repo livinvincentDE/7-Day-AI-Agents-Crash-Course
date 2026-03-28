@@ -1,172 +1,96 @@
+"""
+app.py — Streamlit UI
+Run with: streamlit run app.py
+Imports only from search_agent.py and logs.py — NOT from main.py.
+"""
+
 import asyncio
 import os
+
+import streamlit as st
 from dotenv import load_dotenv
 
-# ─────────────────────────────────────────────
-# 1. Load environment variables FIRST
-# ─────────────────────────────────────────────
 load_dotenv(override=True)
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-if not GROQ_API_KEY:
-    raise EnvironmentError(
-        "GROQ_API_KEY is not set. Please add it to your .env file."
-    )
-
-print(f"✅ GROQ_API_KEY loaded: {GROQ_API_KEY[:15]}...")
-
-# ─────────────────────────────────────────────
-# Imports
-# ─────────────────────────────────────────────
-from pydantic_ai import Agent
-from pydantic_ai.models.groq import GroqModel
-from pydantic_ai.providers.groq import GroqProvider
-
-from search import hybrid_search, text_search, vector_search
-
-
-# ─────────────────────────────────────────────
-# 2. Build Groq model
-# ─────────────────────────────────────────────
-groq_provider = GroqProvider(api_key=GROQ_API_KEY)
-
-model = GroqModel(
-    "llama-3.3-70b-versatile",
-    provider=groq_provider
+st.set_page_config(
+    page_title="AI FAQ Assistant",
+    page_icon="🤖",
+    layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
-print("✅ GroqModel initialized successfully")
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap');
+:root {
+    --bg-primary:#0e0e10;--bg-secondary:#18181b;--bg-card:#1c1c1f;
+    --bg-input:#27272a;--accent-orange:#f97316;--accent-amber:#fbbf24;
+    --text-primary:#f4f4f5;--text-muted:#71717a;--border:#3f3f46;--radius:12px;
+}
+html,body,[data-testid="stAppViewContainer"]{background-color:var(--bg-primary)!important;font-family:'IBM Plex Sans',sans-serif;color:var(--text-primary);}
+[data-testid="stHeader"]{background:transparent!important;}
+[data-testid="stToolbar"]{display:none;}
+[data-testid="stMain"]>div{max-width:760px;margin:0 auto;padding:2rem 1rem 6rem;}
+h1{font-family:'IBM Plex Sans',sans-serif!important;font-size:2.1rem!important;font-weight:700!important;color:var(--text-primary)!important;letter-spacing:-0.02em;}
+[data-testid="stCaptionContainer"] p{color:var(--text-muted)!important;font-size:0.875rem!important;}
+[data-testid="stChatMessage"]{background:var(--bg-card)!important;border:1px solid var(--border)!important;border-radius:var(--radius)!important;padding:1rem 1.25rem!important;margin-bottom:0.75rem!important;}
+[data-testid="chatAvatarIcon-assistant"]{background-color:var(--accent-amber)!important;}
+[data-testid="stChatMessage"] p,[data-testid="stChatMessage"] li{color:var(--text-primary)!important;font-size:0.95rem!important;line-height:1.65!important;}
+[data-testid="stChatMessage"] pre{background:var(--bg-input)!important;border:1px solid var(--border)!important;border-radius:8px!important;padding:.75rem 1rem!important;font-family:'JetBrains Mono',monospace!important;font-size:.82rem!important;}
+[data-testid="stChatMessage"] code{background:var(--bg-input)!important;border-radius:4px!important;padding:.1em .35em!important;font-family:'JetBrains Mono',monospace!important;font-size:.85em!important;color:var(--accent-amber)!important;}
+[data-testid="stChatInput"]{position:fixed!important;bottom:0!important;left:50%!important;transform:translateX(-50%)!important;width:min(760px,96vw)!important;background:var(--bg-secondary)!important;border-top:1px solid var(--border)!important;padding:.75rem 1rem!important;z-index:999!important;}
+[data-testid="stChatInput"] textarea{background:var(--bg-input)!important;border:1px solid var(--border)!important;border-radius:8px!important;color:var(--text-primary)!important;font-family:'IBM Plex Sans',sans-serif!important;font-size:.95rem!important;caret-color:var(--accent-orange)!important;}
+[data-testid="stChatInput"] textarea:focus{border-color:var(--accent-orange)!important;box-shadow:0 0 0 2px rgba(249,115,22,.2)!important;}
+[data-testid="stChatInput"] textarea::placeholder{color:var(--text-muted)!important;}
+[data-testid="stChatInputSubmitButton"]{background:var(--accent-orange)!important;border-radius:6px!important;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg-primary);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+""", unsafe_allow_html=True)
 
 
-# ─────────────────────────────────────────────
-# 3. System prompt with citation instructions
-# ─────────────────────────────────────────────
-SYSTEM_PROMPT = """
-You are a helpful FAQ assistant for an online course platform.
-
-Use ONLY the provided context to answer the question.
-Always include references by citing the source material when possible.
-Use Markdown format: [Question Title](https://github.com/DataTalksClub/faq/blob/main/[filename])
-
-If the context does not contain enough information, reply exactly with:
-"I'm sorry, I don't have enough information to answer that question."
-
-Be concise, friendly, and accurate.
-"""
+@st.cache_resource
+def init_agent():
+    import search_agent
+    return search_agent.init_agent()
 
 
-# ─────────────────────────────────────────────
-# 4. Build the Agent
-# ─────────────────────────────────────────────
-agent = Agent(
-    model=model,
-    system_prompt=SYSTEM_PROMPT,
-)
+agent = init_agent()
 
-# Setup question generator for data generation
-from data_generation import setup_question_generator
-setup_question_generator(model)
+st.title("🤖 AI FAQ Assistant")
+st.caption("Ask me anything about the DataTalksClub/faq repository")
 
-# Create judge agent (for LLM as a Judge)
-from evaluation import create_judge_agent
-create_judge_agent(model)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
 
-# ─────────────────────────────────────────────
-# 5. Build context for RAG
-# ─────────────────────────────────────────────
-def build_context(query: str, search_mode: str = "hybrid") -> str:
-    if search_mode == "text":
-        results = text_search(query)
-    elif search_mode == "vector":
-        results = vector_search(query)
-    else:
-        results = hybrid_search(query)
+if prompt := st.chat_input("Ask your question..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-    if not results:
-        return "No relevant documents found."
-
-    context_parts = []
-    for i, doc in enumerate(results, start=1):
-        q = doc.get("question", "N/A")
-        content = doc.get("content", "N/A")
-        context_parts.append(f"[{i}] Q: {q}\n    A: {content}")
-
-    return "\n\n".join(context_parts)
-
-
-# ─────────────────────────────────────────────
-# 6. Answer function
-# ─────────────────────────────────────────────
-async def answer_question(query: str, search_mode: str = "hybrid") -> str:
-    context = build_context(query, search_mode)
-
-    full_prompt = f"""Context:
-{context}
-
-Question: {query}
-"""
-
-    try:
-        result = await agent.run(full_prompt)
-        return result.output
-    except Exception as e:
-        error_str = str(e).lower()
-        if "401" in error_str or "invalid api key" in error_str:
-            return "❌ Authentication error with Groq. Check your API key."
-        return f"❌ Error generating answer: {e}"
-
-
-# ─────────────────────────────────────────────
-# 7. Interactive CLI with Logging
-# ─────────────────────────────────────────────
-async def interactive_loop():
-    print("\n📚 Course FAQ Agent (Llama-3.3-70B on Groq)")
-    print("Type 'quit', 'exit', or 'q' to stop.\n")
-
-    from evaluation import log_interaction_to_file
-
-    while True:
-        query = input("You: ").strip()
-        if query.lower() in {"quit", "exit", "q"}:
-            print("👋 Goodbye!")
-            break
-        if not query:
-            continue
-
-        print("Thinking...")
-        try:
-            context = build_context(query)
-            full_prompt = f"""Context:
-{context}
-
-Question: {query}
-"""
-
-            result = await agent.run(full_prompt)
-            answer = result.output
-            print(f"\nAgent: {answer}\n")
-
-            # === LOGGING ===
+    with st.chat_message("assistant"):
+        with st.spinner("Searching docs and thinking..."):
+            import search_agent as sa
+            context = sa.build_context(prompt, search_mode="hybrid")
+            full_prompt = f"Context:\n{context}\n\nQuestion: {prompt}"
             try:
-                messages_to_log = result.all_messages()
-                log_path = log_interaction_to_file(agent, messages_to_log, source="user")
-                
-                if log_path:
-                    print(f"✅ Interaction logged successfully! → {log_path.name}")
-                else:
-                    print("⚠️  Log file was not created.")
-            except Exception as log_err:
-                print(f"⚠️  Logging failed: {log_err}")
+                result = asyncio.run(agent.run(full_prompt))
+                answer = result.output
+            except Exception as exc:
+                answer = f"❌ Error: {exc}"
+                result = None
+        st.markdown(answer)
 
-        except Exception as e:
-            print(f"\n[Agent Error] {e}")
-            import traceback
-            traceback.print_exc()
+    st.session_state.messages.append({"role": "assistant", "content": answer})
 
-
-# ─────────────────────────────────────────────
-# 8. Run the app
-# ─────────────────────────────────────────────
-if __name__ == "__main__":
-    asyncio.run(interactive_loop())
+    if result:
+        try:
+            import logs
+            log_path = logs.log_interaction_to_file(agent, result.all_messages(), source="user")
+            if log_path:
+                st.toast(f"📝 Logged → {log_path.name}", icon="✅")
+        except Exception:
+            pass

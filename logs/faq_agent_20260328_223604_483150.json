@@ -1,0 +1,12 @@
+{
+  "agent_name": "faq_agent",
+  "system_prompt": "<bound method Agent.instructions of Agent(model=GroqModel(), name='faq_agent', end_strategy='early', model_settings=None, output_type=<class 'str'>, instrument=None)>",
+  "model": "llama-3.3-70b-versatile",
+  "tools": [],
+  "messages": [
+    "ModelRequest(parts=[SystemPromptPart(content='\\nYou are a helpful FAQ assistant for an online course platform.\\n\\nUse ONLY the provided context to answer the question.\\nAlways include references by citing the source material when possible.\\nUse Markdown format: [Question Title](https://github.com/DataTalksClub/faq/blob/main/[filename])\\n\\nIf the context does not contain enough information, reply exactly with:\\n\"I\\'m sorry, I don\\'t have enough information to answer that question.\"\\n\\nBe concise, friendly, and accurate.\\n', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 3, 752056, tzinfo=datetime.timezone.utc)), UserPromptPart(content='Context:\\n[1] Q: Can I join the course after it starts?\\n    A: Yes, you can join anytime.\\n\\n[2] Q: Is there a deadline?\\n    A: No strict deadline.\\n\\n[3] Q: Do I need prior experience?\\n    A: No prior experience is required.\\n\\nQuestion: can i join the course late instead ?', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 3, 752056, tzinfo=datetime.timezone.utc))], timestamp=datetime.datetime(2026, 3, 28, 17, 6, 3, 752056, tzinfo=datetime.timezone.utc), run_id='b78e5393-e73b-4fab-a464-1983374fe561')",
+    "ModelResponse(parts=[TextPart(content='According to the provided context, yes, you can join the course late. As stated in [1], \"Yes, you can join anytime.\" This implies that joining late is allowed.')], usage=RequestUsage(input_tokens=200, output_tokens=38), model_name='llama-3.3-70b-versatile', timestamp=datetime.datetime(2026, 3, 28, 17, 6, 4, 77194, tzinfo=datetime.timezone.utc), provider_name='groq', provider_url='https://api.groq.com', provider_details={'finish_reason': 'stop', 'timestamp': datetime.datetime(2026, 3, 28, 17, 6, 4, tzinfo=TzInfo(0))}, provider_response_id='chatcmpl-50c26d5c-ff7b-40ec-89e8-82e9adffcf14', finish_reason='stop', run_id='b78e5393-e73b-4fab-a464-1983374fe561')"
+  ],
+  "source": "user",
+  "logged_at": "2026-03-28T22:36:04.079212"
+}

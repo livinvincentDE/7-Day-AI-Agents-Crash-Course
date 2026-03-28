@@ -1,0 +1,11 @@
+{
+  "agent_name": null,
+  "system_prompt": "<bound method Agent.instructions of Agent(model=GroqModel(), name=None, end_strategy='early', model_settings=None, output_type=<class 'str'>, instrument=None)>",
+  "model": "llama-3.3-70b-versatile",
+  "tools": [],
+  "messages": [
+    "ModelRequest(parts=[SystemPromptPart(content='\\nYou are a helpful FAQ assistant for an online course platform.\\n\\nUse ONLY the provided context to answer the question.\\nAlways include references by citing the source material when possible.\\nUse Markdown format: [Question Title](https://github.com/DataTalksClub/faq/blob/main/[filename])\\n\\nIf the context does not contain enough information, reply exactly with:\\n\"I\\'m sorry, I don\\'t have enough information to answer that question.\"\\n\\nBe concise, friendly, and accurate.\\n', timestamp=datetime.datetime(2026, 3, 28, 15, 51, 15, 427694, tzinfo=datetime.timezone.utc)), UserPromptPart(content='Context:\\n[1] Q: Do I need prior experience?\\n    A: No prior experience is required.\\n\\n[2] Q: Can I join the course after it starts?\\n    A: Yes, you can join anytime.\\n\\n[3] Q: Is there a deadline?\\n    A: No strict deadline.\\n\\nQuestion: do i need any experience \\n', timestamp=datetime.datetime(2026, 3, 28, 15, 51, 15, 427694, tzinfo=datetime.timezone.utc))], timestamp=datetime.datetime(2026, 3, 28, 15, 51, 15, 428692, tzinfo=datetime.timezone.utc), run_id='67e3d65d-cecf-436e-ba51-e585d5732f4a')",
+    "ModelResponse(parts=[TextPart(content='No prior experience is required. ([1])')], usage=RequestUsage(input_tokens=198, output_tokens=10), model_name='llama-3.3-70b-versatile', timestamp=datetime.datetime(2026, 3, 28, 15, 51, 16, 447242, tzinfo=datetime.timezone.utc), provider_name='groq', provider_url='https://api.groq.com', provider_details={'finish_reason': 'stop', 'timestamp': datetime.datetime(2026, 3, 28, 15, 51, 17, tzinfo=TzInfo(0))}, provider_response_id='chatcmpl-9e119cd7-35dd-415d-80e2-35a6833140a6', finish_reason='stop', run_id='67e3d65d-cecf-436e-ba51-e585d5732f4a')"
+  ],
+  "source": "user"
+}
