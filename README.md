@@ -1,185 +1,231 @@
-# 🤖 7-Day AI Agents Crash-Course
+# 🤖 AI FAQ Assistant
 
-<div align="center">
+> **Stop searching. Start asking.**
+> An intelligent chatbot that reads DataTalksClub FAQs so you don't have to.
 
-![Course](https://img.shields.io/badge/Course-Free-brightgreen?style=for-the-badge)
-![Duration](https://img.shields.io/badge/Duration-7%20Days-blue?style=for-the-badge)
-![Daily Time](https://img.shields.io/badge/Daily%20Time-1--2%20Hours-orange?style=for-the-badge)
-![Cohort](https://img.shields.io/badge/Cohort-Dec%20%2F%20Jan-purple?style=for-the-badge)
-![Certificate](https://img.shields.io/badge/Certificate-Signed-gold?style=for-the-badge&color=FFD700)
-
-**Build a complete AI agent — from data ingestion to live deployment — in 7 focused days.**
-
-*Cohort-based · Peer-reviewed · Certificate included · 100% Practical*
-
-</div>
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Chat%20UI-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![Groq](https://img.shields.io/badge/Groq-LLM%20Powered-F55036?style=flat-square)](https://groq.com)
+[![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square)](LICENSE)
 
 ---
 
-## 🧠 The Problem This Course Solves
+## 🧩 What Is This?
 
-> Try asking ChatGPT about a framework released in 2025, or something from your **private repository**. It will fail — because it has no access to that information.
+Students in DataTalksClub courses constantly ask the same questions — buried across hundreds of FAQ files, Slack threads, and markdown docs. Finding answers takes forever.
 
-This course teaches you to build a **search-augmented AI agent** that deeply understands *any* GitHub project — yours, or anyone else's.
+**This project fixes that.**
 
-**End result:** A portfolio-ready, deployed AI agent with documentation, a live demo, peer feedback, and a verifiable signed certificate.
-
----
-
-## 📅 7-Day Curriculum
-
-### Day 1 — Ingest & Index Your Data
-> **Deliverable:** Project data downloaded and ready to be processed
-
-- Fetch GitHub repository content via API
-- Extract and parse documentation files
-- Prepare raw data for downstream processing
+You ask a question in plain English. The assistant finds the most relevant FAQ content, sends it to an AI, and returns a clear, grounded answer — all in seconds.
 
 ---
 
-### Day 2 — Intelligent Data Processing
-> **Deliverable:** Data fully processed and ready for search
+## ✨ Features at a Glance
 
-- Cut & chunk documents for optimal retrieval
-- Split large files by paragraphs and sections
-- Apply AI-powered intelligent chunking strategies
-
----
-
-### Day 3 — Add Search
-> **Deliverable:** Working search system you can query about your project
-
-- Build **lexical search** for exact matches & keywords
-- Implement **semantic search** using vector embeddings
-- Combine into a powerful **hybrid search** pipeline
-
----
-
-### Day 4 — Agents & Tools
-> **Deliverable:** Agent that can answer questions about your codebase
-
-- Use OpenAI API for function calling
-- Define tools the agent can invoke autonomously
-- Build agents with **Pydantic AI** framework
-
----
-
-### Day 5 — Offline Evaluation & Testing
-> **Deliverable:** Thoroughly tested agent with performance metrics
-
-- Create custom evaluation datasets for your use case
-- Evaluate retrieval quality and search precision
-- Use AI-powered automated agent evaluation
-
----
-
-### Day 6 — Publish Your Agent
-> **Deliverable:** Live, accessible AI agent available on the web
-
-- Create a clean UI with **Streamlit**
-- Deploy and publish to the internet
-- Share a live link with the world
-
----
-
-### Day 7 — Share Results & Peer Review
-> **Deliverable:** 🏆 Portfolio-ready project + signed certificate of completion
-
-- Write a polished project README
-- Record demo videos & screenshots
-- Review **three** fellow participants' projects
-- Share on social media
-- Receive your **signed certificate of completion**
-
----
-
-## 🏆 Certificate of Completion
-
-Complete the project **+** review three peer submissions to receive a certificate:
-
-| Feature | Detail |
+| Feature | Description |
 |---|---|
-| ✍️ **Hand-Signed** | Personally signed by instructor Alexey Grigorev |
-| 🔗 **Verifiable** | Unique ID with a public link anyone can check |
-| 📱 **QR Code** | Instant verification for employers & colleagues |
-| 🚀 **Project Showcase** | Includes your actual GitHub project URL as proof of work |
+| 🔍 **Hybrid Search** | Combines keyword + semantic (vector) search for best results |
+| 🧠 **RAG Architecture** | Answers are grounded in real FAQ data, not hallucinated |
+| ⚡ **Groq LLM (Llama 3.3)** | Fast, high-quality language model responses |
+| 💬 **Chat UI** | Clean Streamlit interface — just type and go |
+| 📋 **Logging** | Every conversation is saved for review |
+| 📊 **Auto Evaluation** | LLM-as-a-judge scores relevance, clarity, and hallucination |
 
 ---
 
-## 🔧 What Your Agent Will Be Able To Do
+## 🏗️ How It Works
 
-| Capability | How |
-|---|---|
-| Read any GitHub repository | GitHub API with AI-powered chunking |
-| Answer complex code questions | Hybrid search (lexical + semantic) + RAG |
-| Take autonomous actions | Pydantic AI with function calling |
-| Serve as a web app | Streamlit UI deployed to the internet |
-| Measure its own performance | Custom evaluation datasets + AI scoring |
-| Maintain conversation context | Advanced prompt engineering with OpenAI |
+Here's the journey of your question, from input to answer:
 
-**Example interaction:**
 ```
-You:   "How does authentication work in this project?"
-
-Agent: "Based on the codebase analysis, this project uses JWT authentication
-        with middleware in auth.js. The login flow starts in LoginController.js
-        and uses bcrypt for password hashing. Here are the key files involved..."
+You type a question
+        │
+        ▼
+┌─────────────────────┐
+│   Hybrid Search     │  ← Finds the most relevant FAQ chunks
+│  (Text + Vector)    │    using both keyword and semantic search
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│   Context Builder   │  ← Assembles the top results into a prompt
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│   Groq LLM Agent   │  ← Generates a clear, grounded answer
+│  (Pydantic AI)      │    (no making things up!)
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│   Streamlit Chat    │  ← You see the answer + it's logged
+└─────────────────────┘
 ```
+
+> **Why Hybrid Search?** Pure keyword search misses meaning. Pure vector search misses exact terms. Hybrid search gets the best of both — better results, fewer misses.
 
 ---
 
-## 👨‍🏫 Instructor
-
-**Alexey Grigorev** — Principal Data Scientist & AI Education Expert
-
-- 🏢 Founder of [DataTalks.Club](https://datatalks.club)
-- 📚 Creator of the popular **Zoomcamp** series
-- 👨‍🎓 Taught **100,000+ students** worldwide
-- 🏭 Built large-scale ML systems at **OLX Group** and **Simplaex**
-- ⏳ 15 years in software engineering · 12+ years in machine learning
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://linkedin.com)
-[![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=flat&logo=twitter)](https://twitter.com)
-[![DataTalks.Club](https://img.shields.io/badge/DataTalks.Club-Visit-orange?style=flat)](https://datatalks.club)
-
----
-
-## 📆 Cohort Timeline
+## 📁 Project Structure
 
 ```
-December / January Cohort — Now Open
+📦 ai-faq-assistant/
 │
-├── 📥  Join & receive Day 1 email
-├── 🗓️  Complete 7 daily lessons (1–2h each)
-├── 👥  Peer review 3 fellow participants' projects
-├── 🏆  Receive signed, verifiable certificate
-└── 🎓  15% discount unlocked for full AI Bootcamp
+├── 📄 app.py                  ← Main Streamlit app (start here)
+├── 📄 search.py               ← Text, vector & hybrid search logic
+├── 📄 agent.py                ← Pydantic AI agent (Groq LLM)
+├── 📄 data_generation.py      ← Generates test questions
+├── 📄 generate_questions.py   ← Runs evaluation on generated Q&A
+├── 📄 requirements.txt        ← All Python dependencies
+├── 📄 .env                    ← Your API keys (never commit this!)
+└── 📁 logs/                   ← Saved conversation logs
 ```
 
 ---
 
-## 🚀 Enroll — It's Free
+## 🚀 Getting Started
+
+Follow these steps in order. They should take about **5 minutes** on any machine.
+
+### Step 1 — Get the Code
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO
+```
+
+### Step 2 — Create a Virtual Environment
+
+A virtual environment keeps this project's dependencies isolated from your system Python.
+
+```bash
+# Create it
+python -m venv venv
+
+# Activate it
+# On Windows:
+venv\Scripts\activate
+
+# On Mac/Linux:
+source venv/bin/activate
+```
+
+> ✅ You'll know it worked when you see `(venv)` at the start of your terminal prompt.
+
+### Step 3 — Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs everything the project needs (Streamlit, Groq SDK, sentence-transformers, etc.).
+
+### Step 4 — Add Your API Key
+
+Create a file called `.env` in the project root:
+
+```bash
+# Create the file (Mac/Linux)
+touch .env
+
+# Or just open any text editor and save a file named ".env"
+```
+
+Add this line inside it:
 
 ```
-📧 Drop your email at the course page to join the cohort
+GROQ_API_KEY=your_api_key_here
 ```
 
-> 💡 **Bonus:** Complete this free course and receive **15% off** the full AI Bootcamp enrollment. Your promo code arrives in one of the course emails.
+> 🔑 **Get a free Groq API key at:** https://console.groq.com
+>
+> ⚠️ **Never share or commit your `.env` file.** It's already in `.gitignore` if you cloned this repo.
 
 ---
 
-## 🗂️ Tech Stack
+## ▶️ Running the App
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub%20API-181717?style=flat&logo=github&logoColor=white)
-![Pydantic](https://img.shields.io/badge/Pydantic%20AI-E92063?style=flat&logo=pydantic&logoColor=white)
+```bash
+streamlit run app.py
+```
+
+A browser tab will open automatically at `http://localhost:8501`.
+Type any DataTalksClub course question — the assistant handles the rest.
 
 ---
 
-<div align="center">
+## 🧪 Testing & Evaluation
 
-*Built with ❤️ by [DataTalks.Club](https://datatalks.club)*
+Want to measure how well the assistant performs? Run these two commands:
 
-</div>
+```bash
+# 1. Generate a set of test questions from the FAQ data
+python data_generation.py
+
+# 2. Run the LLM-based evaluation on those questions
+python generate_questions.py
+```
+
+The evaluation checks every answer for:
+- **Relevance** — Did it actually answer the question?
+- **Clarity** — Is the answer easy to understand?
+- **Hallucination** — Did it make anything up?
+
+Logs are saved to the `/logs/` folder for review.
+
+### Search Quality Metrics
+
+The search layer is also benchmarked using:
+- **Hit Rate** — Was the right document in the top results?
+- **MRR (Mean Reciprocal Rank)** — How highly was the correct result ranked?
+
+---
+
+## ☁️ Deploy to Hugging Face Spaces (Free Hosting)
+
+You can host this app publicly in minutes:
+
+1. Push your repo to [Hugging Face Spaces](https://huggingface.co/spaces)
+2. In your Space settings, go to **Secrets** and add:
+   ```
+   Name:  GROQ_API_KEY
+   Value: your_api_key_here
+   ```
+3. Set the **SDK** to `Streamlit` and the **entry file** to `app.py`
+4. Your app will build and go live automatically 🎉
+
+---
+
+## 🔮 What's Next
+
+Planned improvements for future versions:
+
+- [ ] Show source citations with links in the chat UI
+- [ ] Add multi-document context ranking
+- [ ] Build a visual evaluation scoring dashboard
+- [ ] Add user feedback buttons (👍 / 👎)
+- [ ] Add conversation memory (follow-up questions)
+
+---
+
+## 🤝 Contributing
+
+Found a bug? Have an idea? Contributions are welcome.
+
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/your-idea`
+3. Make your changes and commit
+4. Open a pull request — describe what you changed and why
+
+---
+
+## 👨‍💻 Author
+
+Built by **Livin Vincent**
+
+If this project helped you, consider ⭐ starring the repo — it helps others find it too.
+
+---
+
+*Built with 🧠 Pydantic AI · ⚡ Groq · 🔍 Hybrid Search · 💬 Streamlit*
