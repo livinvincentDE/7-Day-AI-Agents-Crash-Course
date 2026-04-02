@@ -228,4 +228,8 @@ If this project helped you, consider ⭐ starring the repo — it helps others f
 
 ---
 
+<<<<<<< HEAD
 *Built with 🧠 Pydantic AI · ⚡ Groq · 🔍 Hybrid Search · 💬 Streamlit*
+=======
+*Built with 🧠 Pydantic AI · ⚡ Groq · 🔍 Hybrid Search · 💬 Streamlit*
+>>>>>>> 3ff72083a344eee3294dc6b9e698f1ba2961cac3
