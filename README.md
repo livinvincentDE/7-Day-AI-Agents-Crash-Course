@@ -194,6 +194,7 @@ You can host this app publicly in minutes:
    ```
 3. Set the **SDK** to `Streamlit` and the **entry file** to `app.py`
 4. Your app will build and go live automatically 🎉
+5. App is running live in *https://huggingface.co/spaces/livinmon88/ai-faq-assistant* . Kindly, review the same.
 
 ---
 
