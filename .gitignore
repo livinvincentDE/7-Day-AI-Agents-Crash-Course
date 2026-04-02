@@ -1,13 +1,17 @@
-# Virtual environment
+.env
+.envrc
+__pycache__/
+*.json
+logs/
+
+# Virtual environments
+tmphf-test/
 venv/
-.venv/
+.env/
 
 # Python cache
 __pycache__/
 *.pyc
 
-# Environment variables
-.env
-
-# HuggingFace cache
-.cache/
+# OS
+.DS_Store
